@@ -10,7 +10,7 @@ import {
 import { Form, useLoaderData, useOutletContext } from '@remix-run/react';
 import { CreditCardIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import { OutletContext } from '~/types';
-import { sessionStorage } from '~/sessions';
+import { sessionStorage } from '~/sessions.server';
 import { CurrencyCode, ErrorCode, ErrorResult } from '~/generated/graphql';
 import { StripePayments } from '~/components/checkout/stripe/StripePayments';
 import { DummyPayments } from '~/components/checkout/DummyPayments';
