@@ -1,4 +1,4 @@
-import { useLoaderData, useTransition, useSubmit } from '@remix-run/react';
+import { useLoaderData, useSubmit, useNavigation } from '@remix-run/react';
 import { DataFunctionArgs, json, redirect } from '@remix-run/server-runtime';
 import OrderHistoryItem from '~/components/account/OrderHistoryItem';
 import { getActiveCustomerOrderList } from '~/providers/customer/customer';
@@ -62,7 +62,7 @@ export default function AccountHistory() {
   const { orderList, appliedPaginationLimit, appliedPaginationPage } =
     useLoaderData<typeof loader>();
   const submit = useSubmit();
-  const transition = useTransition();
+  const transition = useNavigation();
   const showingOrdersFrom = translatePaginationFrom(
     appliedPaginationPage,
     appliedPaginationLimit,

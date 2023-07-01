@@ -1,6 +1,5 @@
 import {
   DataFunctionArgs,
-  MetaFunction,
   json,
 } from '@remix-run/server-runtime';
 import { useState, useRef, RefObject, useEffect } from 'react';
@@ -24,13 +23,16 @@ import Alert from '~/components/Alert';
 import { StockLevelLabel } from '~/components/products/StockLevelLabel';
 import TopReviews from '~/components/products/TopReviews';
 import { ScrollableContainer } from '~/components/products/ScrollableContainer';
+import { V2_MetaFunction } from '@remix-run/node';
 
-export const meta: MetaFunction = ({ data }) => {
-  return {
-    title: data?.product?.name
-      ? `${data.product.name} - ${APP_META_TITLE}`
-      : APP_META_TITLE,
-  };
+export const meta: V2_MetaFunction = ({ data }) => {
+  return [
+    {
+      title: data?.product?.name
+        ? `${data.product.name} - ${APP_META_TITLE}`
+        : APP_META_TITLE,
+    },
+  ];
 };
 
 export async function loader({ params, request }: DataFunctionArgs) {
@@ -58,7 +60,6 @@ export const unstable_shouldReload: ShouldReloadFunction = () => true;
 
 export default function ProductSlug() {
   const { product, error } = useLoaderData<typeof loader>();
-  const caught = useCatch();
   const { activeOrderFetcher } = useOutletContext<{
     activeOrderFetcher: FetcherWithComponents<CartLoaderData>;
   }>();
@@ -284,7 +285,7 @@ export default function ProductSlug() {
   );
 }
 
-export function CatchBoundary() {
+export function ErrorBoundary() {
   return (
     <div className="max-w-6xl mx-auto px-4">
       <h2 className="text-3xl sm:text-5xl font-light tracking-tight text-gray-900 my-8">

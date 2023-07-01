@@ -15,7 +15,6 @@ import styles from './styles/app.css';
 import { Header } from './components/header/Header';
 import {
   DataFunctionArgs,
-  MetaFunction,
   json,
 } from '@remix-run/server-runtime';
 import { getCollections } from '~/providers/collections/collections';
@@ -27,9 +26,16 @@ import { getActiveCustomer } from '~/providers/customer/customer';
 import Footer from '~/components/footer/Footer';
 import { useActiveOrder } from '~/utils/use-active-order';
 import { setApiUrl } from '~/graphqlWrapper';
+import { V2_MetaFunction } from '@remix-run/node';
 
-export const meta: MetaFunction = () => {
-  return { title: APP_META_TITLE, description: APP_META_DESCRIPTION };
+export const meta: V2_MetaFunction = () => {
+  return [
+    { title: APP_META_TITLE },
+    {
+      name: 'description',
+      content: APP_META_DESCRIPTION
+    }
+  ];
 };
 
 export function links() {
@@ -205,13 +211,4 @@ export function ErrorBoundary() {
   }
 
   return <DefaultSparseErrorPage tagline={tagline} headline={headline} description={description} />;
-}
-
-/**
- * In Remix v2 there will only be a `ErrorBoundary`
- * As mentioned in the jsdoc for `DefaultSparseErrorPage` you should replace this to suit your needs.
- * Relevant for the future: https://remix.run/docs/en/main/route/error-boundary-v2
- */
-export function CatchBoundary() {
-  return ErrorBoundary();
 }

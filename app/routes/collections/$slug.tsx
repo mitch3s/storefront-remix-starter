@@ -1,4 +1,4 @@
-import { DataFunctionArgs, MetaFunction } from '@remix-run/server-runtime';
+import { DataFunctionArgs } from '@remix-run/server-runtime';
 import { useLoaderData, useSubmit } from '@remix-run/react';
 import { sdk } from '../../graphqlWrapper';
 import { CollectionCard } from '~/components/collections/CollectionCard';
@@ -11,13 +11,16 @@ import { FiltersButton } from '~/components/FiltersButton';
 import { ValidatedForm } from 'remix-validated-form';
 import { withZod } from '@remix-validated-form/with-zod';
 import { FilterableProductGrid } from '~/components/products/FilterableProductGrid';
+import { V2_MetaFunction } from '@remix-run/node';
 
-export const meta: MetaFunction = ({ data }) => {
-  return {
-    title: data?.collection
-      ? `${data.collection?.name} - ${APP_META_TITLE}`
-      : APP_META_TITLE,
-  };
+export const meta: V2_MetaFunction = ({ data }) => {
+  return [
+    {
+      title: data?.collection
+        ? `${data.collection?.name} - ${APP_META_TITLE}`
+        : APP_META_TITLE,
+    },
+  ];
 };
 
 const paginationLimitMinimumDefault = 25;
@@ -120,7 +123,7 @@ export default function CollectionSlug() {
   );
 }
 
-export function CatchBoundary() {
+export function ErrorBoundary() {
   return (
     <div className="max-w-6xl mx-auto px-4">
       <h2 className="text-3xl sm:text-5xl font-light tracking-tight text-gray-900 my-8">
